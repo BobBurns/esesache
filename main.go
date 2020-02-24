@@ -88,14 +88,16 @@ func main() {
 
 	hostArg := fmt.Sprintf("%s@%s", hosts[input].user, hosts[input].hostname)
 	var sshArgs []string
-	sshArgs = append(sshArgs, hostArg)
 	if len(hosts[input].options) > 0 {
 		for _, o := range hosts[input].options {
-			s := fmt.Sprintf(" -o %s=%s ", o.key, o.value)
+			s := "-o"
+			sshArgs = append(sshArgs, s)
+			s = fmt.Sprintf("%s=%s ", o.key, o.value)
 			sshArgs = append(sshArgs, s)
 
 		}
 	}
+	sshArgs = append(sshArgs, hostArg)
 
 	fmt.Printf("ssh ")
 	for _, a := range sshArgs {
